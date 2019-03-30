@@ -157,6 +157,11 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+<dependency>
+		<groupId>com.amazonaws</groupId>
+		<artifactId>aws-crypto-compliance-checker</artifactId>
+		<version>1.0</version>
+</dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -381,6 +386,41 @@
                     <source>${java_source_version}</source>
                     <target>${java_target_version}</target>
                     <encoding>${file_encoding}</encoding>
+                    <compilerArguments>
+                      <Xmaxerrs>10000</Xmaxerrs>
+	              <Xmaxwarns>10000</Xmaxwarns>
+	              <Astubs>${project.basedir}/stubs/</Astubs>
+                    </compilerArguments>
+	            <annotationProcessorPaths>
+	              <path>
+		        <groupId>org.checkerframework</groupId>
+		        <artifactId>checker</artifactId>
+		        <version>0.0.0</version>
+	              </path>
+	              <path>
+		        <groupId>com.amazonaws</groupId>
+		        <artifactId>kms-compliance-checker</artifactId>
+		        <version>1.0</version>
+	              </path>
+	              <path>
+		        <groupId>com.amazonaws</groupId>
+		        <artifactId>aws-crypto-compliance-checker</artifactId>
+		        <version>1.0</version>
+	              </path>
+	              <path>
+		        <groupId>org.checkerframework</groupId>
+		        <artifactId>checker-qual</artifactId>
+		        <version>2.7.0</version>
+	              </path>
+	            </annotationProcessorPaths>
+	            <annotationProcessors>
+	              <!-- Add all the checkers you want to enable here -->
+	              <annotationProcessor>
+                        com.amazon.checkerframework.compliance.kms.ComplianceChecker,com.amazon.checkerframework.cryptopolicy.CryptoPolicyComplianceChecker
+                        <!--org.checkerframework.common.value.ValueChecker-->
+                      </annotationProcessor>
+	            </annotationProcessors>
+                    
                 </configuration>
             </plugin>
             <plugin>
