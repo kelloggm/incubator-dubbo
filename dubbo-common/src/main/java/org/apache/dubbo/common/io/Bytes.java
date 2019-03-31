@@ -911,6 +911,7 @@ public class Bytes {
         return md.digest();
     }
 
+    @SuppressWarnings({"value","crypto","compliance"}) // TRUE POSITIVE: MD5 is weak. Though this file doesn't appear to be used for crypto, it *could* be, so having this present is a possible compliance violation.
     private static MessageDigest getMessageDigest() {
         MessageDigest ret = MD.get();
         if (ret == null) {
